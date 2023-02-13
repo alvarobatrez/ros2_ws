@@ -34,3 +34,17 @@ Inside ros2_ws directory:
 
 - colcon build
 - colcon build --packages-select name_of_the_package
+
+## Run a node
+
+- ros2 run name_of_the_package name_of_the_executable
+
+## Topics
+
+- ros2 topic list
+- ros2 topic pub /name_of_the_topic type/of/interface "{data: value}"
+- ros2 topic pub -1 /name_of_the_topic type/of/interface "{data: value}"
+- ros2 topic pub -r 1.0 /name_of_the_topic type/of/interface "{data: value}"
+- ros2 topic echo /name_of_the_topic
+- ros2 topic hz /name_of_the_topic
+- ros2 topic info /name_of_the_topic
