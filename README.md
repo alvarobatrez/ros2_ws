@@ -38,6 +38,7 @@ Inside ros2_ws directory:
 ## Run a node
 
 - ros2 run name_of_the_package name_of_the_executable
+- ros2 run name_of_the_package name_of_the_executable --ros-args -r __node:=new_node_name
 
 ## Topics
 
