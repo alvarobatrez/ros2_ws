@@ -22,11 +22,17 @@ Save the file and close the terminal.
 
 Verify that in the terminal you are inside ros2_ws/src directory.
 
+- ros2 pkg create name_of_the_package --build_type ament_cmake --dependencies dependency_1_name dependency_2_name
+
 Python: ament_python, C++: ament_cmake
 
-- ros2 pkg create name_of_the_package --build_type ament_cmake --dependencies dependency_name
+Examples:
 
-Every time a new package is created, you need to source the workspace again, or open and close the terminal.
+- ros2 pkg create my_package --build_type --ament_python --dependencies rclpy std_msgs my_interface
+
+- ros2 pkg create my_package --build_type --ament_cmake --dependencies rclcpp std_msgs my_interface
+
+Every time a new package is created, you need to source the workspace again, or close and open the terminal.
 
 ## Compiling
 
