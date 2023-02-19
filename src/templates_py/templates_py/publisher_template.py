@@ -30,7 +30,7 @@ class PublisherTemplate(Node):
 def main(args=None):
     rclpy.init(args=args)
     publisher_template = PublisherTemplate('publisher_template')
-    rclpy.spin(publisher_template)
+    rclpy.spin(node=publisher_template)
     rclpy.shutdown()
 
 if __name__ == '__main__':

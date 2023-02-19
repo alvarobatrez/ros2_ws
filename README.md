@@ -20,7 +20,7 @@ Save the file and close the terminal.
 
 ## Create a package
 
-Verify that in the terminal you are inside ros2_ws/src directory.
+Verify in the terminal that you are inside ros2_ws/src directory.
 
 - ros2 pkg create name_of_the_package --build_type ament_cmake --dependencies dependency_1_name dependency_2_name
 
@@ -45,6 +45,8 @@ Inside ros2_ws directory:
 
 - ros2 run name_of_the_package name_of_the_executable
 - ros2 run name_of_the_package name_of_the_executable --ros-args -r __node:=new_node_name
+- ros2 run name_of_the_package name_of_the_executable --ros-args -r /name_of_the_topic:=/new_name_of_the_topic
+- ros2 run name_of_the_package name_of_the_executable --ros-args -r /name_of_the_service:=/new_name_of_the_service
 
 ## Topics
 
@@ -55,3 +57,13 @@ Inside ros2_ws directory:
 - ros2 topic echo /name_of_the_topic
 - ros2 topic hz /name_of_the_topic
 - ros2 topic info /name_of_the_topic
+
+## Services
+
+- ros2 service list
+- ros2 service call /name_of_the_service type/of/interface "{request: data}"
+
+## Parameters
+
+- ros2 param list
+- ros2 param get /name_of_the_node name_of_the_param

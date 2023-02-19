@@ -21,7 +21,7 @@ class SubscriberTemplate(Node):
 def main(args=None):
     rclpy.init(args=args)
     subscriber_template = SubscriberTemplate('subscriber_template')
-    rclpy.spin(subscriber_template)
+    rclpy.spin(node=subscriber_template)
     rclpy.shutdown()
 
 if __name__ == '__main__':
