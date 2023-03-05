@@ -40,7 +40,6 @@ class Client(Node):
 def main(args=None):
     rclpy.init(args=args)
     client = Client('client')
-    rclpy.spin(client)
     rclpy.shutdown()
 
 if __name__ == '__main__':

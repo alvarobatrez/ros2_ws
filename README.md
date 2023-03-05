@@ -28,9 +28,9 @@ Python: ament_python, C++: ament_cmake
 
 Examples:
 
-- ros2 pkg create my_package --build_type --ament_python --dependencies rclpy std_msgs my_interface
+- ros2 pkg create my_package --build_type --ament_python --dependencies rclpy std_msgs my_example_interface
 
-- ros2 pkg create my_package --build_type --ament_cmake --dependencies rclcpp std_msgs my_interface
+- ros2 pkg create my_package --build_type --ament_cmake --dependencies rclcpp std_msgs my_example_interface
 
 Every time a new package is created, you need to source the workspace again, or close and open the terminal.
 
@@ -47,6 +47,7 @@ Inside ros2_ws directory:
 - ros2 run name_of_the_package name_of_the_executable --ros-args -r __node:=new_node_name
 - ros2 run name_of_the_package name_of_the_executable --ros-args -r /name_of_the_topic:=/new_name_of_the_topic
 - ros2 run name_of_the_package name_of_the_executable --ros-args -r /name_of_the_service:=/new_name_of_the_service
+- ros2 run name_of_the_package name_of_the_executable --ros-args -p name_of_the_parameter:=value
 
 ## Topics
 

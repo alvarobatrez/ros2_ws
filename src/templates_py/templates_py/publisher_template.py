@@ -14,7 +14,7 @@ class PublisherTemplate(Node):
             qos_profile=10
         )
 
-        timer = self.create_timer(
+        self.timer = self.create_timer(
             timer_period_sec=1.0,
             callback=self.publish
         )
