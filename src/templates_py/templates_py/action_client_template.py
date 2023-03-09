@@ -48,6 +48,7 @@ class ActionClientTemplate(Node):
             self.get_logger().info('Goal accepted')
         else:
             self.get_logger().warn('Goal rejected')
+            rclpy.shutdown()
             return
         
         get_result_future = goal_handle.get_result_async()

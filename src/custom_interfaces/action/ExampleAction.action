@@ -1,5 +1,5 @@
-int64 goal
+int8 goal
 ---
 bool result
 ---
-int64 feedback
+int8 feedback
