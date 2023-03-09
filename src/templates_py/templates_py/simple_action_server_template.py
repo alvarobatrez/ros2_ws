@@ -26,6 +26,8 @@ class ActionServerTemplate(Node):
         success = False
         cancel = False
 
+        self.get_logger().info(f'Executing goal: {goal}')
+
         counter = 0
         max_number = 10
 
