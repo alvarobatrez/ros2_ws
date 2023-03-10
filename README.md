@@ -68,3 +68,10 @@ Inside ros2_ws directory:
 
 - ros2 param list
 - ros2 param get /name_of_the_node name_of_the_param
+
+## Actions
+
+- ros2 action list
+- ros2 action info /name_of_the_action
+- ros2 action send_goal /name_of_the_action type/of/interface "{goal: data}"
+- ros2 action send_goal -f /name_of_the_action type/of/interface "{goal: data}"
