@@ -26,6 +26,9 @@ setup(
             'client_template = templates_py.client_template:main',
             'simple_action_server_template = templates_py.simple_action_server_template:main',
             'action_server_template = templates_py.action_server_template:main',
+            'action_server_queue_template = templates_py.action_server_queue_template:main',
+            'action_server_single_goal_template = templates_py.action_server_single_goal_template:main',
+            'action_server_reject_if_active_template = templates_py.action_server_reject_if_active_template:main',
             'action_client_template = templates_py.action_client_template:main',
             'action_client_cancel_template = templates_py.action_client_cancel_template:main',
             'cancel_action_template = templates_py.cancel_action_template:main'

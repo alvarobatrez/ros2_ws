@@ -24,7 +24,6 @@ class ActionServerTemplate(Node):
         result = ExampleAction.Result()
         feedback = ExampleAction.Feedback()
         success = False
-        cancel = False
 
         self.get_logger().info(f'Executing goal: {goal}')
 
@@ -32,10 +31,6 @@ class ActionServerTemplate(Node):
         max_number = 10
 
         while rclpy.ok():
-
-            if goal_handle.is_cancel_requested:
-                cancel = True
-                break
 
             if counter > max_number:
                 break
@@ -53,10 +48,7 @@ class ActionServerTemplate(Node):
 
         result.result = success
 
-        if cancel:
-            self.get_logger().warn('Goal canceled')
-            goal_handle.canceled()
-        elif success:
+        if success:
             self.get_logger().info('Goal succeed')
             goal_handle.succeed()
         else:
