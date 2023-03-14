@@ -11,16 +11,16 @@ class SubscriberTemplate(Node):
         self.sub = self.create_subscription(
             msg_type=String,
             topic='/example_topic',
-            callback=self.callback,
+            callback=self.get_message,
             qos_profile=10
         )
 
-    def callback(self, msg):
+    def get_message(self, msg: String) -> None:
         self.get_logger().info(message='Receiving: ' + msg.data)
 
 def main(args=None):
     rclpy.init(args=args)
-    subscriber_template = SubscriberTemplate('subscriber_template')
+    subscriber_template = SubscriberTemplate(node_name='subscriber_template')
     rclpy.spin(node=subscriber_template)
     rclpy.shutdown()
 

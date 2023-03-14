@@ -21,6 +21,9 @@ class Client(Node):
             width=self.get_parameter(name='width').value
         )
 
+        self.get_logger().info(message=f'Perimeter: {response.perimeter}')
+        self.get_logger().info(message=f'Area: {response.area}')
+
     def call(self, length: float, width: float) -> ExampleService.Response:
         while not self.client.wait_for_service(timeout_sec=1.0):
             self.get_logger().warn(message='Waiting for the server')
@@ -30,22 +33,14 @@ class Client(Node):
         request.width = width
 
         future = self.client.call_async(request=request)
-        future.add_done_callback(callback=self.callback)
+        rclpy.spin_until_future_complete(node=self, future=future)
 
-    def callback(self, future):
-        try:
-            result = future.result()
-            self.get_logger().info(message=f'Perimeter: {result.perimeter}')
-            self.get_logger().info(message=f'Area: {result.area}')
-        except Exception as e:
-            self.get_logger().error('Service call failed: ' + str(e))
-
-        rclpy.shutdown()
+        return future.result()
 
 def main(args=None):
     rclpy.init(args=args)
     client = Client('client')
-    rclpy.spin(client)
+    rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

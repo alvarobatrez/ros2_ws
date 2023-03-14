@@ -23,6 +23,7 @@ setup(
             'publisher_template = templates_py.publisher_template:main',
             'subscriber_template = templates_py.subscriber_template:main',
             'server_template = templates_py.server_template:main',
+            'client_single_call_template = templates_py.client_single_call_template:main',
             'client_template = templates_py.client_template:main',
             'simple_action_server_template = templates_py.simple_action_server_template:main',
             'action_server_template = templates_py.action_server_template:main',

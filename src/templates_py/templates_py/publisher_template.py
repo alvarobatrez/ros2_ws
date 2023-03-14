@@ -19,17 +19,17 @@ class PublisherTemplate(Node):
             callback=self.publish
         )
 
-    def publish(self):
+    def publish(self) -> None:
         msg = String()
         msg.data = 'Music'
         
         self.get_logger().info(message='Transmitting: ' + msg.data)
 
-        self.pub.publish(msg)
+        self.pub.publish(msg=msg)
 
 def main(args=None):
     rclpy.init(args=args)
-    publisher_template = PublisherTemplate('publisher_template')
+    publisher_template = PublisherTemplate(node_name='publisher_template')
     rclpy.spin(node=publisher_template)
     rclpy.shutdown()
 
