@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 from custom_interfaces.srv import ExampleService
 
-class Client(Node):
+class ClientTemplate(Node):
 
     def __init__(self, node_name: str) -> None:
         super().__init__(node_name)
@@ -16,7 +16,7 @@ class Client(Node):
             srv_name='/example_service'
         )
 
-        response = self.call(
+        self.call(
             length=self.get_parameter(name='length').value,
             width=self.get_parameter(name='width').value
         )
@@ -32,7 +32,7 @@ class Client(Node):
         future = self.client.call_async(request=request)
         future.add_done_callback(callback=self.callback)
 
-    def callback(self, future):
+    def callback(self, future: rclpy.Future) -> None:
         try:
             result = future.result()
             self.get_logger().info(message=f'Perimeter: {result.perimeter}')
@@ -44,8 +44,8 @@ class Client(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    client = Client('client')
-    rclpy.spin(client)
+    client_template = ClientTemplate(node_name='client_template')
+    rclpy.spin(client_template)
 
 if __name__ == '__main__':
     main()

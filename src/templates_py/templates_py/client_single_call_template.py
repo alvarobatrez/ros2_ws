@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 from custom_interfaces.srv import ExampleService
 
-class Client(Node):
+class ClientSingleCallTemplate(Node):
 
     def __init__(self, node_name: str) -> None:
         super().__init__(node_name)
@@ -39,7 +39,7 @@ class Client(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    client = Client('client')
+    client_single_call_template = ClientSingleCallTemplate(node_name='client_single_call_template')
     rclpy.shutdown()
 
 if __name__ == '__main__':
