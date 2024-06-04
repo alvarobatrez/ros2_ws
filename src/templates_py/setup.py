@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'transmitter = templates_py.transmitter:main'
+            'transmitter = templates_py.transmitter:main',
+            'receiver = templates_py.receiver:main'
         ],
     },
 )

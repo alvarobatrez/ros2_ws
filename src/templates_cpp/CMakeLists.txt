@@ -14,8 +14,12 @@ find_package(custom_interfaces REQUIRED)
 add_executable(transmitter src/transmitter.cpp)
 ament_target_dependencies(transmitter rclcpp std_msgs)
 
+add_executable(receiver src/receiver.cpp)
+ament_target_dependencies(receiver rclcpp std_msgs)
+
 install(TARGETS
   transmitter
+  receiver
   DESTINATION lib/${PROJECT_NAME}
 )
 
