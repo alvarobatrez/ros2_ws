@@ -21,7 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
             'transmitter = templates_py.transmitter:main',
-            'receiver = templates_py.receiver:main'
+            'receiver = templates_py.receiver:main',
+            'server = templates_py.server:main'
         ],
     },
 )

@@ -6,7 +6,7 @@ from std_msgs.msg import String
 class Receiver(Node):
 
     def __init__(self, node_name):
-        super().__init__(node_name)
+        super().__init__(node_name=node_name)
         self.sub = self.create_subscription(
             msg_type=String,
             topic='/example_topic',
@@ -20,7 +20,7 @@ class Receiver(Node):
 def main(args=None):
     rclpy.init(args=args)
     receiver = Receiver(node_name='receiver')
-    rclpy.spin(receiver)
+    rclpy.spin(node=receiver)
     rclpy.shutdown()
 
 if __name__ == '__main__':
