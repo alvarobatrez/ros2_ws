@@ -22,7 +22,9 @@ setup(
         'console_scripts': [
             'transmitter = templates_py.transmitter:main',
             'receiver = templates_py.receiver:main',
-            'server = templates_py.server:main'
+            'server = templates_py.server:main',
+            'client = templates_py.client:main',
+            'client_single_call = templates_py.client_single_call:main'
         ],
     },
 )

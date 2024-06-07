@@ -20,10 +20,14 @@ ament_target_dependencies(receiver rclcpp std_msgs)
 add_executable(server src/server.cpp)
 ament_target_dependencies(server rclcpp custom_interfaces)
 
+add_executable(client src/client.cpp)
+ament_target_dependencies(client rclcpp custom_interfaces)
+
 install(TARGETS
   transmitter
   receiver
   server
+  client
   DESTINATION lib/${PROJECT_NAME}
 )
 
