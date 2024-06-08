@@ -9,8 +9,8 @@ class Client(Node):
     def __init__(self, node_name: str):
         super().__init__(node_name)
 
-        self.declare_parameter(name='length', value=1.0)
-        self.declare_parameter(name='width', value=1.0)
+        self.declare_parameter(name='length', value=0.0)
+        self.declare_parameter(name='width', value=0.0)
 
         length = self.get_parameter(name='length').value
         width = self.get_parameter(name='width').value

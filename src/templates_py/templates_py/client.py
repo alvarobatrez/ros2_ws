@@ -8,15 +8,15 @@ class Client(Node):
     def __init__(self, node_name: str):
         super().__init__(node_name)
 
-        self.declare_parameter(name='length', value=1.0)
-        self.declare_parameter(name='width', value=1.0)
+        self.declare_parameter(name='length', value=0.0)
+        self.declare_parameter(name='width', value=0.0)
 
         length = self.get_parameter(name='length').value
         width = self.get_parameter(name='width').value
 
-        self.call_server(length=length, width=width)
+        self.send_request(length=length, width=width)
 
-    def call_server(self, length, width):
+    def send_request(self, length, width):
         client = self.create_client(srv_type=ExampleService, srv_name='/example_service')
 
         while not client.wait_for_service(timeout_sec=1.0):
@@ -27,11 +27,16 @@ class Client(Node):
         req.width = width
 
         future = client.call_async(request=req)
-        rclpy.spin_until_future_complete(node=self, future=future)
-        res = future.result()
 
-        self.get_logger().info(message=f'Area: {res.area}')
-        self.get_logger().info(message=f'Perimeter: {res.perimeter}')
+        rclpy.spin_until_future_complete(node=self, future=future)
+        
+        try:
+            res = future.result()
+            self.get_logger().info(message=f'Area: {res.area}')
+            self.get_logger().info(message=f'Perimeter: {res.perimeter}')
+        except Exception as e:
+            self.get_logger().error("Service call failed %r" % (e,))
+
 
 def main(args=None):
     rclpy.init(args=args)
