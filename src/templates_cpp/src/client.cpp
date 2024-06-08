@@ -1,42 +1,65 @@
-#include "rclcpp/rclcpp.hpp"
-#include "custom_interfaces/srv/example_service.hpp"
+#include <rclcpp/rclcpp.hpp>
+#include <custom_interfaces/srv/example_service.hpp>
 
-#include <chrono>
-#include <cstdlib>
-#include <memory>
+typedef custom_interfaces::srv::ExampleService ExampleService;
 
-using namespace std::chrono_literals;
+class Client : public rclcpp::Node
+{
+    public:
+
+    Client(std::string node_name) : Node(node_name) {}
+
+    void send_request(double length, double width)
+    {
+        rclcpp::Client<ExampleService>::SharedPtr client = this->create_client<ExampleService>("/example_service");
+
+        while(!client->wait_for_service(std::chrono::seconds(1)))
+        {
+            if (!rclcpp::ok())
+            {
+                return;
+            }
+            
+            RCLCPP_WARN(this->get_logger(), "Waiting for the server");
+        }
+        
+        std::shared_ptr<ExampleService::Request> req = std::make_shared<ExampleService::Request>();
+        req->length = length;
+        req->width = width;
+
+        auto future = client->async_send_request(req);
+
+        if (rclcpp::spin_until_future_complete(shared_from_this(), future) == rclcpp::FutureReturnCode::SUCCESS)
+        {
+            std::shared_ptr<ExampleService::Response> res = future.get();
+            RCLCPP_INFO(this->get_logger(), "Area: %f", res->area);
+            RCLCPP_INFO(this->get_logger(), "Perimeter: %f", res->perimeter);
+        }
+        else
+        {
+            RCLCPP_ERROR(this->get_logger(), "Service call failed");
+        }
+
+    }
+
+    double length, width;
+
+};
 
 int main(int argc, char **argv)
 {
-  rclcpp::init(argc, argv);
+    rclcpp::init(argc, argv);
+    std::shared_ptr<Client> client = std::make_shared<Client>("client");
+    
+    client->declare_parameter("length", 0.0);
+    client->declare_parameter("width", 0.0);
 
-  std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("client");
-  rclcpp::Client<custom_interfaces::srv::ExampleService>::SharedPtr client =
-    node->create_client<custom_interfaces::srv::ExampleService>("/example_service");
+    double length = client->get_parameter("length").as_double();
+    double width = client->get_parameter("width").as_double();
 
-  auto request = std::make_shared<custom_interfaces::srv::ExampleService::Request>();
-  request->length = 1.0;
-  request->width = 1.0;
+    client->send_request(length, width);
 
-  while (!client->wait_for_service(1s)) {
-    if (!rclcpp::ok()) {
-      RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
-      return 0;
-    }
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "service not available, waiting again...");
-  }
-
-  auto result = client->async_send_request(request);
-  // Wait for the result.
-  if (rclcpp::spin_until_future_complete(node, result) ==
-    rclcpp::FutureReturnCode::SUCCESS)
-  {
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sum: %f", result.get()->perimeter);
-  } else {
-    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service add_two_ints");
-  }
-
-  rclcpp::shutdown();
-  return 0;
+    rclcpp::shutdown();
+    
+    return 0;
 }
