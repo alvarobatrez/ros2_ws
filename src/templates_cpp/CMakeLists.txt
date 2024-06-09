@@ -23,11 +23,15 @@ ament_target_dependencies(server rclcpp custom_interfaces)
 add_executable(client src/client.cpp)
 ament_target_dependencies(client rclcpp custom_interfaces)
 
+add_executable(client_async src/client_async.cpp)
+ament_target_dependencies(client_async rclcpp custom_interfaces)
+
 install(TARGETS
   transmitter
   receiver
   server
   client
+  client_async
   DESTINATION lib/${PROJECT_NAME}
 )
 
