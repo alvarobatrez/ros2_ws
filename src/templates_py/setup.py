@@ -24,7 +24,8 @@ setup(
             'receiver = templates_py.receiver:main',
             'server = templates_py.server:main',
             'client = templates_py.client:main',
-            'client_async = templates_py.client_async:main'
+            'client_async = templates_py.client_async:main',
+            'action_server = templates_py.action_server:main'
         ],
     },
 )
