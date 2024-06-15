@@ -22,6 +22,8 @@ class Server : public rclcpp::Node
             std::bind(&Server::handle_cancel, this, std::placeholders::_1),
             std::bind(&Server::handle_accepted, this, std::placeholders::_1)
         );
+
+        RCLCPP_INFO(this->get_logger(), "Action server is up");
     }
 
     private:
