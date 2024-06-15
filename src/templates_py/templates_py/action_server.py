@@ -26,6 +26,7 @@ class Server(Node):
 
     async def execute_callback(self, goal_handle):
         self.get_logger().info(message='Executing new goal')
+        
         goal = goal_handle.request.goal
         result = ExampleAction.Result()
         feedback = ExampleAction.Feedback()

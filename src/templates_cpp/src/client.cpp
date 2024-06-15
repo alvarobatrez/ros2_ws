@@ -27,7 +27,7 @@ class Client : public rclcpp::Node
         req->length = length;
         req->width = width;
 
-        auto future = client->async_send_request(req);
+        rclcpp::Client<ExampleService>::FutureAndRequestId future = client->async_send_request(req);
 
         if (rclcpp::spin_until_future_complete(shared_from_this(), future) == rclcpp::FutureReturnCode::SUCCESS)
         {
