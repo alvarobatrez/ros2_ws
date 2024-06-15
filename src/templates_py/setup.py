@@ -25,9 +25,8 @@ setup(
             'server = templates_py.server:main',
             'client = templates_py.client:main',
             'client_async = templates_py.client_async:main',
-            'simple_action_server = templates_py.simple_action_server:main',
-            'simple_action_client = templates_py.simple_action_client:main',
-            'action_server = templates_py.action_server:main'
+            'action_server = templates_py.action_server:main',
+            'action_client = templates_py.action_client:main'
         ],
     },
 )
