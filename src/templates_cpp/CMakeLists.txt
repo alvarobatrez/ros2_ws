@@ -30,6 +30,9 @@ ament_target_dependencies(client_async rclcpp custom_interfaces)
 add_executable(action_server src/action_server.cpp)
 ament_target_dependencies(action_server rclcpp custom_interfaces rclcpp_action)
 
+add_executable(action_server_queue_goals src/action_server_queue_goals.cpp)
+ament_target_dependencies(action_server_queue_goals rclcpp custom_interfaces rclcpp_action)
+
 add_executable(action_client src/action_client.cpp)
 ament_target_dependencies(action_client rclcpp custom_interfaces rclcpp_action)
 
@@ -40,6 +43,7 @@ install(TARGETS
   client
   client_async
   action_server
+  action_server_queue_goals
   action_client
   DESTINATION lib/${PROJECT_NAME}
 )
