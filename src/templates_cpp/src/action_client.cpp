@@ -37,7 +37,7 @@ class Client : public rclcpp::Node
                 return;
             }
             
-            RCLCPP_WARN(this->get_logger(), "Waiting for the server");
+            RCLCPP_WARN(this->get_logger(), "Waiting for the action server");
         }
 
         auto goal_msg = ExampleAction::Goal();
@@ -61,7 +61,7 @@ class Client : public rclcpp::Node
         }
         else
         {
-            RCLCPP_ERROR(this->get_logger(), "Goal canceled");
+            RCLCPP_WARN(this->get_logger(), "Goal rejected");
             rclcpp::shutdown();
         }
     }
@@ -72,7 +72,7 @@ class Client : public rclcpp::Node
         const std::shared_ptr<const ExampleAction::Feedback> feedback
     )
     {
-        RCLCPP_INFO(this->get_logger(), "Feedback: %i", feedback->feedback);
+        RCLCPP_INFO(this->get_logger(), "Feedback: %i", (int)feedback->feedback);
     }
 
     void result_callback(const GoalHandle::WrappedResult &result)
@@ -89,9 +89,11 @@ class Client : public rclcpp::Node
             RCLCPP_ERROR(this->get_logger(), "Goal failed with status: Aborted");
             break;
         default:
-            RCLCPP_ERROR(this->get_logger(), "Goal failed with status: %i", result.code);
+            RCLCPP_ERROR(this->get_logger(), "Goal failed with status: %i", (int)result.code);
             break;
         }
+
+        rclcpp::shutdown();
     }
 
     rclcpp_action::Client<ExampleAction>::SharedPtr client;
