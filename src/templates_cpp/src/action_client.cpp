@@ -50,7 +50,7 @@ class Client : public rclcpp::Node
             std::bind(&Client::feedback_callback, this, std::placeholders::_1, std::placeholders::_2);
         send_goal_options.result_callback = 
             std::bind(&Client::result_callback, this, std::placeholders::_1);
-        auto future = client->async_cancel_goal(goal_msg, send_goal_options);
+        auto future = client->async_send_goal(goal_msg, send_goal_options);
     }
 
     void goal_response_callback(GoalHandle::SharedPtr goal_handle)
@@ -73,6 +73,25 @@ class Client : public rclcpp::Node
     )
     {
         RCLCPP_INFO(this->get_logger(), "Feedback: %i", feedback->feedback);
+    }
+
+    void result_callback(const GoalHandle::WrappedResult &result)
+    {
+        switch (result.code)
+        {
+        case rclcpp_action::ResultCode::SUCCEEDED:
+            RCLCPP_INFO(this->get_logger(), "Goal succeeded: %s", result.result ? "true" : "false");
+            break;      
+        case rclcpp_action::ResultCode::CANCELED:
+            RCLCPP_ERROR(this->get_logger(), "Goal failed with status: Canceled");
+            break;
+        case rclcpp_action::ResultCode::ABORTED:
+            RCLCPP_ERROR(this->get_logger(), "Goal failed with status: Aborted");
+            break;
+        default:
+            RCLCPP_ERROR(this->get_logger(), "Goal failed with status: %i", result.code);
+            break;
+        }
     }
 
     rclcpp_action::Client<ExampleAction>::SharedPtr client;
