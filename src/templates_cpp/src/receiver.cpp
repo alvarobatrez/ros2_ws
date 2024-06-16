@@ -28,7 +28,7 @@ class Receiver : public rclcpp::Node
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    std::shared_ptr<Receiver> receiver = std::make_shared<Receiver>("receiver");
+    auto receiver = std::make_shared<Receiver>("receiver");
     rclcpp::spin(receiver);
     rclcpp::shutdown();
 

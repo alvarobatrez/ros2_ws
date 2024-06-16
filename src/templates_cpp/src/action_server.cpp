@@ -32,9 +32,9 @@ class Server : public rclcpp::Node
     {
         RCLCPP_INFO(this->get_logger(), "Executing new goal");
         
-        const std::shared_ptr<const ExampleAction::Goal> goal = goal_handle->get_goal();
-        std::shared_ptr<ExampleAction::Result> result = std::make_shared<ExampleAction::Result>();
-        std::shared_ptr<ExampleAction::Feedback> feedback = std::make_shared<ExampleAction::Feedback>();
+        const auto goal = goal_handle->get_goal();
+        auto result = std::make_shared<ExampleAction::Result>();
+        auto feedback = std::make_shared<ExampleAction::Feedback>();
         bool success = false;
         bool cancel = false;
 
@@ -126,8 +126,8 @@ class Server : public rclcpp::Node
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    std::shared_ptr<Server> server = std::make_shared<Server>("server");
-    rclcpp::spin(server);
+    auto action_server = std::make_shared<Server>("action_server");
+    rclcpp::spin(action_server);
     rclcpp::shutdown();
 
     return 0;

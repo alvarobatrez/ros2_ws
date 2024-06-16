@@ -11,7 +11,7 @@ class Client : public rclcpp::Node
 
     void send_request(double length, double width)
     {
-        rclcpp::Client<ExampleService>::SharedPtr client = this->create_client<ExampleService>("/example_service");
+        auto client = this->create_client<ExampleService>("/example_service");
 
         while(!client->wait_for_service(std::chrono::seconds(1)))
         {
@@ -23,11 +23,11 @@ class Client : public rclcpp::Node
             RCLCPP_WARN(this->get_logger(), "Waiting for the server");
         }
         
-        std::shared_ptr<ExampleService::Request> req = std::make_shared<ExampleService::Request>();
+        auto req = std::make_shared<ExampleService::Request>();
         req->length = length;
         req->width = width;
 
-        rclcpp::Client<ExampleService>::FutureAndRequestId future = client->async_send_request(req);
+        auto future = client->async_send_request(req);
 
         if (rclcpp::spin_until_future_complete(shared_from_this(), future) == rclcpp::FutureReturnCode::SUCCESS)
         {
@@ -42,14 +42,12 @@ class Client : public rclcpp::Node
 
     }
 
-    double length, width;
-
 };
 
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    std::shared_ptr<Client> client = std::make_shared<Client>("client");
+    auto client = std::make_shared<Client>("client");
     
     client->declare_parameter("length", 0.0);
     client->declare_parameter("width", 0.0);

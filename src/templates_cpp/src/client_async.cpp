@@ -12,19 +12,19 @@ class Client : public rclcpp::Node
         this->declare_parameter("length", 0.0);
         this->declare_parameter("width", 0.0);
 
-        length = this->get_parameter("length").as_double();
-        width = this->get_parameter("width").as_double();
+        double length = this->get_parameter("length").as_double();
+        double width = this->get_parameter("width").as_double();
 
         thread.push_back(std::thread(std::bind(&Client::send_request, this, length, width)));
     }
 
     ~Client()
     {
-        for (auto &t : thread)
+        for (auto &th : thread)
         {
-            if (t.joinable())
+            if (th.joinable())
             {
-                t.join();
+                th.join();
             }
         }
     }
@@ -66,14 +66,13 @@ class Client : public rclcpp::Node
 
     }
 
-    double length, width;
     std::vector<std::thread> thread;
 };
 
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    std::shared_ptr<Client> client = std::make_shared<Client>("client");
+    auto client = std::make_shared<Client>("client");
     rclcpp::spin(client);
     
     return 0;

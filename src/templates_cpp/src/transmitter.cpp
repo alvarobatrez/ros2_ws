@@ -37,7 +37,7 @@ class Transmitter : public rclcpp::Node
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    std::shared_ptr<Transmitter> transmitter = std::make_shared<Transmitter>("transmitter");
+    auto transmitter = std::make_shared<Transmitter>("transmitter");
     rclcpp::spin(transmitter);
     rclcpp::shutdown();
 
