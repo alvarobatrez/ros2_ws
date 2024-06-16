@@ -23,11 +23,11 @@ class Client(Node):
         self.send_goal(goal)
 
     def send_goal(self, goal):
-        goal_msg = ExampleAction.Goal()
-        goal_msg.goal = goal
-
         while not self.action_client.wait_for_server(timeout_sec=1.0):
             self.get_logger().warn(message='Waiting for the action server')
+
+        goal_msg = ExampleAction.Goal()
+        goal_msg.goal = goal
 
         future = self.action_client.send_goal_async(
             goal=goal_msg,
