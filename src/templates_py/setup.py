@@ -26,6 +26,7 @@ setup(
             'client = templates_py.client:main',
             'client_async = templates_py.client_async:main',
             'action_server = templates_py.action_server:main',
+            'action_server_queue_goals = templates_py.action_server_queue_goals:main',
             'action_client = templates_py.action_client:main'
         ],
     },
