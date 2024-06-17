@@ -87,6 +87,15 @@ class Server : public rclcpp::Node
             goal_handle->abort(result);
             RCLCPP_ERROR(this->get_logger(), "Goal aborted");
         }
+
+        goal_queue.pop();
+
+        if (!goal_queue.empty())
+        {
+            current_goal = goal_queue.front();
+            RCLCPP_INFO(this->get_logger(), "Next goal put from the queue");
+            std::thread{std::bind(&Server::execute, this, std::placeholders::_1), current_goal}.detach();
+        }
     }
 
     rclcpp_action::GoalResponse handle_goal
@@ -117,10 +126,21 @@ class Server : public rclcpp::Node
 
     void handle_accepted(const std::shared_ptr<GoalHandle> goal_handle)
     {
-        std::thread{std::bind(&Server::execute, this, std::placeholders::_1), goal_handle}.detach();
+        goal_queue.push(goal_handle);
+        if (goal_queue.size() == 1)
+        {
+            current_goal = goal_queue.front();
+            std::thread{std::bind(&Server::execute, this, std::placeholders::_1), current_goal}.detach();
+        }
+        else
+        {
+            RCLCPP_INFO(this->get_logger(), "Goal put in the queue");
+        }
     }
 
     rclcpp_action::Server<ExampleAction>::SharedPtr action_server;
+    std::queue<std::shared_ptr<GoalHandle>> goal_queue;
+    std::shared_ptr<GoalHandle> current_goal;
 };
 
 int main(int argc, char **argv)
