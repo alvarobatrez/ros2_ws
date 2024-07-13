@@ -26,7 +26,7 @@ class Transmitter : public rclcpp::Node
         msg.data = "news";
         pub->publish(msg);
 
-        RCLCPP_INFO(this->get_logger(), "Transmitting: %s", msg.data.c_str());
+        // RCLCPP_INFO(this->get_logger(), "Transmitting: %s", msg.data.c_str());
     }
 
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub;
