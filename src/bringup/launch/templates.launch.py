@@ -8,7 +8,7 @@ def generate_launch_description():
         package='templates_cpp',
         executable='transmitter',
         name='transmitter',
-        parameters=[{'period': 1.0}],
+        parameters=[{'period': 1.5}],
         remappings=[('/example_topic', '/my_topic')]
     )
 
